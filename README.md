@@ -16,37 +16,65 @@ mim install mmcv-full==1.6.0
 
 ## Results
 
-Dataset
+The results of ChestDR, ColonPath and Endo in MedFMC dataset and their corresponding configs on each task are shown as below.
 
-Backbone
+### Few-shot Learning Results
 
-mAP
+We utilize [Visual Prompt Tuning](https://github.com/KMnP/vpt) method as the few-shot learning baseline, whose backbone is Swin Transformer.
+The results are shown as below:
 
-AUC
+#### ChestDR
 
-ChestDR
+| N Shot | Crop Size | Epoch |  mAP  |  AUC  |                                      Config                                      |
+| :----: | :-------: | :---: | :---: | :---: | :------------------------------------------------------------------------------: |
+|   1    |  384x384  |  20   | 13.14 | 56.49 | [config](configs/swin-b_vpt/in21k-swin-b_vpt5_bs4_lr5e-2_1-shot_chest_adamw.py)  |
+|   5    |  384x384  |  20   | 17.05 | 64.86 | [config](configs/swin-b_vpt/in21k-swin-b_vpt5_bs4_lr5e-2_5-shot_chest_adamw.py)  |
+|   10   |  384x384  |  20   | 19.01 | 66.68 | [config](configs/swin-b_vpt/in21k-swin-b_vpt5_bs4_lr5e-2_10-shot_chest_adamw.py) |
 
-Swin-B
+#### ColonPath
 
-31.07
+| N Shot | Crop Size | Epoch |  Acc  |  AUC  |                                      Config                                      |
+| :----: | :-------: | :---: | :---: | :---: | :------------------------------------------------------------------------------: |
+|   1    |  384x384  |  20   | 77.60 | 84.69 | [config](configs/swin-b_vpt/in21k-swin-b_vpt5_bs4_lr5e-2_1-shot_colon_adamw.py)  |
+|   5    |  384x384  |  20   | 89.29 | 96.07 | [config](configs/swin-b_vpt/in21k-swin-b_vpt5_bs4_lr5e-2_5-shot_colon_adamw.py)  |
+|   10   |  384x384  |  20   | 91.21 | 97.14 | [config](configs/swin-b_vpt/in21k-swin-b_vpt5_bs4_lr5e-2_10-shot_colon_adamw.py) |
 
-78.56
+#### Endo
 
-ColonPath
+| N Shot | Crop Size | Epoch |  mAP  |  AUC  |                                     Config                                      |
+| :----: | :-------: | :---: | :---: | :---: | :-----------------------------------------------------------------------------: |
+|   1    |  384x384  |  20   | 19.70 | 62.18 | [config](configs/swin-b_vpt/in21k-swin-b_vpt5_bs4_lr5e-2_1-shot_endo_adamw.py)  |
+|   5    |  384x384  |  20   | 23.88 | 67.48 | [config](configs/swin-b_vpt/in21k-swin-b_vpt5_bs4_lr5e-2_5-shot_endo_adamw.py)  |
+|   10   |  384x384  |  20   | 25.62 | 71.41 | [config](configs/swin-b_vpt/in21k-swin-b_vpt5_bs4_lr5e-2_10-shot_endo_adamw.py) |
 
-Swin-B
+### Transfer Learning on 20% (Fully Supervised Task)
 
-94.68
+Noted that MedFMC mainly focuses on few-shot learning i.e., transfer learning task.
+Thus, fully supervised learning tasks below only use 20% training data to make corresponding comparisons.
 
-98.35
+#### ChestDR
 
-Endo
+|    Backbone     | Crop Size | Epoch |  mAP  |  AUC  |                        Config                         |
+| :-------------: | :-------: | :---: | :---: | :---: | :---------------------------------------------------: |
+|   DenseNet121   |  384x384  |  20   | 24.48 | 75.25 |     [config](configs/densenet/dense121_chest.py)      |
+| EfficientNet-B5 |  384x384  |  20   | 29.08 | 77.21 |    [config](configs/efficientnet/eff-b5_chest.py)     |
+|     Swin-B      |  384x384  |  20   | 31.07 | 78.56 | [config](configs/swin_transformer/swin-base_chest.py) |
 
-Swin-B
+#### ColonPath
 
-41.38
+|    Backbone     | Crop Size | Epoch |  Acc  |  AUC  |                        Config                         |
+| :-------------: | :-------: | :---: | :---: | :---: | :---------------------------------------------------: |
+|   DenseNet121   |  384x384  |  20   | 92.73 | 98.27 |     [config](configs/densenet/dense121_colon.py)      |
+| EfficientNet-B5 |  384x384  |  20   | 94.04 | 98.58 |    [config](configs/efficientnet/eff-b5_colon.py)     |
+|     Swin-B      |  384x384  |  20   | 94.68 | 98.35 | [config](configs/swin_transformer/swin-base_colon.py) |
 
-79.42
+#### Endo
+
+|    Backbone     | Crop Size | Epoch |  mAP  |  AUC  |                        Config                        |
+| :-------------: | :-------: | :---: | :---: | :---: | :--------------------------------------------------: |
+|   DenseNet121   |  384x384  |  20   | 41.13 | 80.19 |     [config](configs/densenet/dense121_endo.py)      |
+| EfficientNet-B5 |  384x384  |  20   | 36.95 | 78.23 |    [config](configs/efficientnet/eff-b5_endo.py)     |
+|     Swin-B      |  384x384  |  20   | 41.38 | 79.42 | [config](configs/swin_transformer/swin-base_endo.py) |
 
 ## Usage
 
